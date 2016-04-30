@@ -1,0 +1,12 @@
+fox
+owl
+cat
+pig
+bat
+ant
+eel
+dog
+yak
+bug
+jay
+gnu
