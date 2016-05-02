@@ -30,14 +30,14 @@ public class BSTree {
 		if (s.compareTo(node.getElement()) < 0 ){
 			if (node.hasLeft()) insert(s, node.getLeft());
 			else {
-				Node newNode = new Node(s,null,null,null);
+				Node newNode = new Node(s,null,null,node);
 				node.setLeft(newNode);
 				size++;
 			}
 		} else if (s.compareTo(node.getElement()) > 0) {
 			if (node.hasRight())insert(s, node.getRight());
 			else {
-				Node newNode = new Node(s,null,null,null);
+				Node newNode = new Node(s,null,null,node);
 				node.setRight(newNode);
 				size++;
 			}
