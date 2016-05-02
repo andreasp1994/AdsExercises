@@ -251,7 +251,7 @@ public class BSTree {
     private void deleteNotInternal(Node node){
 	Node v = node.getParent();
 	if (node.isRightChild()  && !node.hasLeft()) v.setRight(node.getRight());
-	else if (node.isRightChild() && !node.hasRight()) v.setRight(node.getRight());
+	else if (node.isRightChild() && !node.hasRight()) v.setRight(node.getLeft());
 	else if (node.isLeftChild() && !node.hasLeft()) v.setLeft(node.getRight());
 	else if (node.isLeftChild() && ! node.hasRight()) v.setLeft(node.getLeft());
     }
