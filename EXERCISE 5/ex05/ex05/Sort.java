@@ -19,13 +19,7 @@ public class Sort {
 	for (int i=0;i<d;i++) n = n / 10;
 	return n % 10;
     }
-    //
-    // give me the dth digit of decimal number n
-    // NOTE: getDthDigit(857,0) would deliver 7
-    //       getDthDigit(857,1) would deliver 5
-    //       getDthDigit(857,3) would deliver 0
-    //
-	
+
     private static void bubbleSort(int[] A){
 		for (int i = 0;i<A.length;i++){
 			boolean swaped = false;
@@ -40,9 +34,9 @@ public class Sort {
 	}
 
 	/**
-	Used for Radix Sort.
+	Used for Radix Sort. 
 	**/
-	private static void addToBucket(int[] A, Integer digitpos, ArrayList<Integer>[] buckets){
+	private static void addToBucket(int[] A, Integer digitpos, LinkedList<Integer>[] buckets){
 		for (int n : A){
 			int digit = getDthDigit(n,digitpos);
 			buckets[digit].add(n);
@@ -52,23 +46,22 @@ public class Sort {
 	/**
 	Used for Radix Sort.
 	**/
-	private static void removeFromBuckets(int[] A, ArrayList<Integer>[] buckets){
-		int num = 0;
-		for (ArrayList<Integer> b: buckets){
-			for(int i =0;i<b.size();i++){
-				A[num]=b.get(i);
-				num++;
+	private static void removeFromBuckets(int[] A, LinkedList<Integer>[] buckets){
+		int i = 0;
+		for (LinkedList<Integer> b: buckets){
+			while(!b.isEmpty()){
+				A[i] = b.removeFirst();
+				i++;
 			}
-			b.clear();
 		}
 	}
 	
 	//Used for debugging
-	private static void printBuckets(ArrayList<Integer>[] buckets){
+	private static void printBuckets(LinkedList<Integer>[] buckets){
 		for(int i =0;i<buckets.length;i++){
 			System.out.print(i + ":");
-			for(int n : buckets[i]){
-				System.out.print(n+",");
+			while(!buckets[i].isEmpty()){
+				System.out.println(n+",");
 			}
 			System.out.println();
 		}
@@ -79,16 +72,18 @@ public class Sort {
 		//Max digits
 		int maxDigits = numberOfDigitsIn(MAX_NUMBER);
 	
-		//Create buckets
-		ArrayList<Integer>[] buckets = new ArrayList[10];                       // (1)
-		for (int i=0;i<10;i++) buckets[i] = new ArrayList<Integer>();            // (2)
+		// Create buckets
+		// Use LinkedList because ArrayList's add operation runs in amortized constant time, that is, adding n elements requires O(n) time
+		// Recall : if arraylist needs more space it has to resize itself. On the contrary, linked list dynamically allocates space.
+		LinkedList<Integer>[] buckets = new LinkedList[10];                      
+		for (int i=0;i<10;i++) buckets[i] = new LinkedList<Integer>();            
 		
 		//For each digit, add to bucket and remove from bucket
 		for(int n = 0;n<=maxDigits;n++){
 			addToBucket(A,n,buckets);
 			removeFromBuckets(A,buckets);
 		}
-    }                                                                           // (6)
+    }                                                                           
 
 	@SuppressWarnings("unchecked")
     private static void pigeonholeSort(int[] A){
@@ -101,6 +96,8 @@ public class Sort {
 	}
 	
 	int range = max - min + 1;
+	// Use LinkedList because ArrayList's add operation runs in amortized constant time, that is, adding n elements requires O(n) time
+	// Recall : if arraylist needs more space it has to resize itself. On the contrary, linked list dynamically allocates space.
 	LinkedList<Integer>[] pigeonholes = new LinkedList[range];
 	for(int i = 0;i<range;i++) pigeonholes[i] = new LinkedList<Integer>();
 	
@@ -143,10 +140,3 @@ public class Sort {
 	}
     }
 }
-//
-// See readme.txt
-//
-// to bubble sort 20 numbers, largest is 99
-//
-// > java Sort bubble 20 100
-//
